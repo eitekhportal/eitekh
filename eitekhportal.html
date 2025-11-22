@@ -1,5 +1,20 @@
+<style>
+  /* Ensure the container takes full screen on mobile */
+  .app-iframe-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% of viewport width */
+    height: 100vh; /* 100% of viewport height */
+    border: none;
+    z-index: 9999; /* Ensure it sits on top of other mobile elements */
+    overflow: hidden;
+  }
+</style>
+
 <iframe 
     src="https://script.google.com/macros/s/AKfycbwBqxGIR0xQeCD70rT7syNB-StgKxTtqVv86QoLT5MBGM_4gBdaSbwInggR64gHK0zu/exec"
-    style="width: 100%; height: 100%; border: none;"
-    title="Eitekh Support Portal">
+    class="app-iframe-container"
+    title="Eitekh Support Portal"
+    scrolling="yes">
 </iframe>
