@@ -1,5 +1,22 @@
-<iframe 
-    src="https://script.google.com/macros/s/AKfycbxadxJOJw5ve2NN-eRb18SHvbq3Atm7TXB2Qmd_YONhNkW1fQDiQbSi7ITUdlb3jqyCAw/exec" 
-    style="width: 100%; min-height: 100vh; border: none;"
-    title="My Apps Script Portal">
-</iframe>
+<iframe id="portal-iframe" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+
+<script>
+  // 1. Put your actual deployed Google Apps Script URL here
+  const gasWebAppUrl = "https://script.google.com/macros/s/AKfycbzpFoUPn5Md7cijEehgNc7ZDGnu5R0F6C1vncZsqGbkIMAa76mwopN7L7ndYK2GWIyrZg/exec";
+  
+  // 2. Grab the current URL parameters from your GitHub page
+  const urlParams = new URLSearchParams(window.location.search);
+  const project = urlParams.get('Project');
+  const sheetName = urlParams.get('SheetName');
+  
+  // 3. Build the new iframe URL
+  let iframeUrl = gasWebAppUrl;
+  if (project || sheetName) {
+    iframeUrl += "?";
+    if (project) iframeUrl += "Project=" + encodeURIComponent(project) + "&";
+    if (sheetName) iframeUrl += "SheetName=" + encodeURIComponent(sheetName);
+  }
+  
+  // 4. Set the iframe source
+  document.getElementById("portal-iframe").src = iframeUrl;
+</script>
