@@ -1,4 +1,54 @@
-<iframe id="portal-iframe" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    /* Crucial fix for iOS Safari touch/scroll issues */
+    -webkit-overflow-scrolling: touch; 
+    cursor: pointer; 
+  }
+  
+  .iframe-container {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Prevents double scrollbars */
+  }
+  
+  /* Mobile fallback styling (hidden by default) */
+  .mobile-fallback {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    font-family: sans-serif;
+  }
+  
+  @media (max-width: 768px) {
+    /* If the iframe STILL won't let you type on your specific phone, 
+       uncomment the next two lines to show a direct link button instead. */
+    
+    /* .iframe-container { display: none; } */
+    /* .mobile-fallback { display: block; } */
+  }
+</style>
+
+<div class="iframe-container">
+  <iframe 
+    id="portal-iframe" 
+    style="width: 100%; height: 100%; border: none;" 
+    scrolling="yes" 
+    allow="fullscreen"
+    frameborder="0" 
+    marginheight="0" 
+    marginwidth="0">
+    Loading...
+  </iframe>
+</div>
+
+<div class="mobile-fallback">
+  <p style="margin-bottom: 20px; color: #333;">For the best mobile experience, please open the portal directly.</p>
+  <a id="mobile-link" href="#" target="_blank" style="padding: 12px 24px; background: #005A9C; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Open Portal</a>
+</div>
 
 <script>
   // 1. Put your actual deployed Google Apps Script URL here
@@ -9,14 +59,16 @@
   const project = urlParams.get('Project');
   const sheetName = urlParams.get('SheetName');
   
-  // 3. Build the new iframe URL
+  // 3. Build the new iframe URL safely
   let iframeUrl = gasWebAppUrl;
   if (project || sheetName) {
     iframeUrl += "?";
-    if (project) iframeUrl += "Project=" + encodeURIComponent(project) + "&";
+    if (project) iframeUrl += "Project=" + encodeURIComponent(project);
+    if (project && sheetName) iframeUrl += "&"; 
     if (sheetName) iframeUrl += "SheetName=" + encodeURIComponent(sheetName);
   }
   
-  // 4. Set the iframe source
+  // 4. Set the iframe source AND the mobile fallback link
   document.getElementById("portal-iframe").src = iframeUrl;
+  document.getElementById("mobile-link").href = iframeUrl;
 </script>
