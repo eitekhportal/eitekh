@@ -1,22 +1,31 @@
-<iframe id="portal-iframe" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eitekh Portal</title>
+    <style>
+        /* Make the iframe take up the full screen */
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        #app-frame { border: none; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
 
-<script>
-  // 1. Put your actual deployed Google Apps Script URL here
-  const gasWebAppUrl = "https://script.google.com/macros/s/AKfycbywYxwsqZpyICfSexdqP9H6d5gTrrk1LZ9ERQQcMnRgykNe2VCiQPbJkIMZmlMws8_YCw/exec";
-  
-  // 2. Grab the current URL parameters from your GitHub page
-  const urlParams = new URLSearchParams(window.location.search);
-  const project = urlParams.get('Project');
-  const sheetName = urlParams.get('SheetName');
-  
-  // 3. Build the new iframe URL
-  let iframeUrl = gasWebAppUrl;
-  if (project || sheetName) {
-    iframeUrl += "?";
-    if (project) iframeUrl += "Project=" + encodeURIComponent(project) + "&";
-    if (sheetName) iframeUrl += "SheetName=" + encodeURIComponent(sheetName);
-  }
-  
-  // 4. Set the iframe source
-  document.getElementById("portal-iframe").src = iframeUrl;
-</script>
+    <iframe id="app-frame" src=""></iframe>
+
+    <script>
+        // 2. Put your exact Google Apps Script Web App URL here
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyCPU5zngJs_tEtxRb1Mpu2hwHJ--G570wwkmJB9TI5v5Rdjz3wpNjP2gK4LhFyf-M/exec";
+
+        // 3. Grab the query parameters from the main website's URL
+        const urlParams = window.location.search; 
+
+        // 4. Get the iframe element
+        const iframe = document.getElementById("app-frame");
+
+        // 5. Set the iframe's src to the GAS URL + the query parameters
+        // This automatically passes ?Project=X&SheetName=Y&Layout=Z into the web app
+        iframe.src = GAS_WEB_APP_URL + urlParams;
+    </script>
+
+</body>
+</html>
